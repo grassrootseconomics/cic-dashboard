@@ -1,0 +1,5 @@
+injector:
+  enabled: false
+server:
+  dataStorage:
+    size: 1Gi

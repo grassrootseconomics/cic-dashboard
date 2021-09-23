@@ -1,0 +1,60 @@
+metadata:
+  org: gitlab.com/grassrootseconomics
+
+namespaces:
+  argocd:
+    protected: false
+  traefik:
+    protected: false
+  grassroots:
+    protected: false
+
+helmRepos:
+  argocd: https://argoproj.github.io/argo-helm
+  traefik: https://helm.traefik.io/traefik
+  hashicorp: https://helm.releases.hashicorp.com
+  jetstack: https://charts.jetstack.io
+  external-secrets: https://charts.external-secrets.io
+
+apps:
+  argocd:
+    name: argocd
+    namespace: argocd
+    enabled: true
+    chart: argocd/argo-cd
+    version: 2.1.2
+  traefik:
+    name: traefik
+    namespace: traefik
+    enabled: true
+    chart: traefik/traefik
+    version: 10.3.4
+    valuesFile: helm-values/traefik.yaml
+  cert-manager:
+    name: cert-manager
+    namespace: traefik
+    enabled: true
+    chart: jetstack/cert-manager
+    version: 1.5.3
+    setString:
+      installCRDs: true
+  external-secrets-operator:
+    name: external-secrets-operator
+    namespace: grassroots
+    enabled: true
+    chart: external-secrets/external-secrets
+    version: 0.3.5
+  vault:
+    name: vault
+    namespace: grassroots
+    enabled: true
+    chart: hashicorp/vault
+    version: 0.16.0
+    valuesFile: helm-values/vault.yaml
+  postgres-operator:
+    name: postgres-operator
+    namespace: grassroots
+    enabled: true
+    chart: https://raw.githubusercontent.com/zalando/postgres-operator/c8dc7ca871a8d1e3d651a22cea6e0653204b3ae4/charts/postgres-operator/postgres-operator-1.7.0.tgz
+    version: 1.7.0
+    valuesFile: helm-values/postgres-operator.yaml

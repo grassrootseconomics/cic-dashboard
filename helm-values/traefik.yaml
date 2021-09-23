@@ -1,0 +1,16 @@
+additionalArguments:
+  - --entryPoints.web.http.redirections.entryPoint.to=websecure
+  - --entryPoints.web.http.redirections.entryPoint.scheme=https
+  - --entrypoints.web.http.redirections.entryPoint.to=:443
+  - --entrypoints.web.http.redirections.entrypoint.permanent=true
+  - --entrypoints.web.http.redirections.entrypoint.priority=10
+  - --providers.kubernetesIngress.ingressClass=traefik-cert-manager
+ingressRoute:
+  dashboard:
+    enabled: false
+  service:
+    spec:
+      externalTrafficPolicy: Cluster
+service:
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "cic-k8s-prod-lb"
