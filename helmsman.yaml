@@ -23,7 +23,7 @@ apps:
     namespace: argocd
     enabled: true
     chart: argocd/argo-cd
-    version: 2.1.2
+    version: 3.21.0
     valuesFile: helm-values/argocd.yaml
   argo-workflows:
     name: argo-workflows
