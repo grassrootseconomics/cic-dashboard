@@ -1,7 +1,0 @@
-configKubernetes:
-  spilo_privileged: true
-configKubernetes:
-  pod_environment_secret: walg-env
-configAwsOrGcp:
-  wal_s3_bucket: pgwal
-  
