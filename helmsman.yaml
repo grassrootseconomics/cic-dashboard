@@ -19,12 +19,21 @@ helmRepos:
 apps:
   argocd:
     name: argocd
+    priority: -1
     namespace: argocd
     enabled: true
     chart: argocd/argo-cd
     version: 2.1.2
+    valuesFile: helm-values/argocd.yaml
+  argo-workflows:
+    name: argo-workflows
+    namespace: argocd
+    enabled: true
+    chart: argocd/argo-workflows
+    version: 0.6.0
   traefik:
     name: traefik
+    priority: -3
     namespace: traefik
     enabled: true
     chart: traefik/traefik
@@ -32,6 +41,7 @@ apps:
     valuesFile: helm-values/traefik.yaml
   cert-manager:
     name: cert-manager
+    priority: -2
     namespace: traefik
     enabled: true
     chart: jetstack/cert-manager
@@ -55,6 +65,6 @@ apps:
     name: postgres-operator
     namespace: grassroots
     enabled: true
-    chart: https://raw.githubusercontent.com/zalando/postgres-operator/c8dc7ca871a8d1e3d651a22cea6e0653204b3ae4/charts/postgres-operator/postgres-operator-1.7.0.tgz
+    chart: https://opensource.zalando.com/postgres-operator/charts/postgres-operator/postgres-operator-1.7.0.tgz
     version: 1.7.0
     valuesFile: helm-values/postgres-operator.yaml
