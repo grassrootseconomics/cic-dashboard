@@ -19,7 +19,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: argocd.PROD_DOMAIN
-  namespace: argocd
+  namespace: argo
   labels:
     "use-http01-solver": "true"
 spec:
@@ -35,7 +35,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: argocd-server
-  namespace: argocd
+  namespace: argo
 spec:
   entryPoints:
     - websecure
@@ -61,7 +61,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: workflows.PROD_DOMAIN
-  namespace: argocd
+  namespace: argo
   labels:
     "use-http01-solver": "true"
 spec:
@@ -77,7 +77,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: workflows-server
-  namespace: argocd
+  namespace: argo
 spec:
   entryPoints:
     - websecure
@@ -137,3 +137,79 @@ subjects:
   - kind: ServiceAccount
     name: vault-auth
     namespace: default
+# Argo Workflows Authorization
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argo-invocation
+  namespace: argo
+rules:
+- apiGroups:
+  - "argoproj.io"
+  resources:
+  - "workflows"
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-default-invocation
+  namespace: argo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argo-invocation
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+
+
+# give workflows (as argo:default) permissions to run things
+# see https://github.com/argoproj/argo/blob/master/docs/workflow-rbac.md
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argo-workflow
+  namespace: argo
+rules:
+# pod get/watch is used to identify the container IDs of the current pod
+# pod patch is used to annotate the step's outputs back to controller (e.g. artifact location)
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - patch
+# logs get/watch are used to get the pods logs for script outputs, and for log archival
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argo-default-workflow
+  namespace: argo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argo-workflow
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: argo

@@ -31,6 +31,8 @@ apps:
     enabled: true
     chart: argocd/argo-workflows
     version: 0.6.0
+    setString:
+      controller.containerRuntimeExecutor: k8sapi
   traefik:
     name: traefik
     priority: -3

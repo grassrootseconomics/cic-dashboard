@@ -26,6 +26,8 @@
 
 ##### 2. Configure Argo CD
 
+1. Dump the admin password with `kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+
 ##### 3. Configure Vault
 
 ##### 4. Configure Postgres Operator
