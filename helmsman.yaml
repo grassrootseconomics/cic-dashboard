@@ -2,7 +2,7 @@ metadata:
   org: gitlab.com/grassrootseconomics
 
 namespaces:
-  argocd:
+  argo:
     protected: false
   traefik:
     protected: false
@@ -20,14 +20,14 @@ apps:
   argocd:
     name: argocd
     priority: -1
-    namespace: argocd
+    namespace: argo
     enabled: true
     chart: argocd/argo-cd
     version: 3.21.0
     valuesFile: helm-values/argocd.yaml
   argo-workflows:
     name: argo-workflows
-    namespace: argocd
+    namespace: argo
     enabled: true
     chart: argocd/argo-workflows
     version: 0.6.0
