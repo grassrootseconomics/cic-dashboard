@@ -1,0 +1,139 @@
+# Issuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: mohamedsohailazim@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: issuer-account-key
+    solvers:
+      - http01:
+          ingress:
+            class: traefik-cert-manager
+---
+# ArgoCD
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd.PROD_DOMAIN
+  namespace: argocd
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: argocd.PROD_DOMAIN
+  secretName: argocd.PROD_DOMAIN.cert
+  dnsNames:
+    - argocd.PROD_DOMAIN
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`argocd.PROD_DOMAIN`)
+      priority: 10
+      services:
+        - name: argocd-server
+          port: 80
+    - kind: Rule
+      match: Host(`argocd.PROD_DOMAIN`) && Headers(`Content-Type`, `application/grpc`)
+      priority: 11
+      services:
+        - name: argocd-server
+          port: 80
+          scheme: h2c
+  tls:
+    secretName: argocd.PROD_DOMAIN.cert
+---
+# Workflows
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: workflows.PROD_DOMAIN
+  namespace: argocd
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: workflows.PROD_DOMAIN
+  secretName: workflows.PROD_DOMAIN.cert
+  dnsNames:
+    - workflows.PROD_DOMAIN
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: workflows-server
+  namespace: argocd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`workflows.PROD_DOMAIN`)
+      services:
+        - name: argo-workflows-server
+          port: 2746
+  tls:
+    secretName: workflows.PROD_DOMAIN.cert
+---
+# Vault
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault.PROD_DOMAIN
+  namespace: grassroots
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: vault.PROD_DOMAIN
+  secretName: vault.PROD_DOMAIN.cert
+  dnsNames:
+    - vault.PROD_DOMAIN
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: vault-server
+  namespace: grassroots
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`vault.PROD_DOMAIN`)
+      kind: Rule
+      services:
+        - name: vault
+          port: 8200
+  tls:
+    secretName: vault.PROD_DOMAIN.cert
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-tokenreview-binding
+  namespace: grassroots
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: vault-auth
+    namespace: default
