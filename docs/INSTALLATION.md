@@ -34,12 +34,11 @@ The `init-resources.yaml` applies `Roles`,`RoleBindings`,`IngressRoutes` and `Ce
 
 1. `kubectl apply -f init-resources.yaml`
 
-#### 4. Configure Argo CD
+#### 4. Configure Vault
+
+1. Follow the steps in `vault.md`
+
+#### 5. Configure Argo CD
 
 1. Dump the admin password with `kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
-
-#### 5. Configure Vault
-
-#### 6. Configure External Secrets
-
-#### 7. Configure Postgres Operator
+2. Follow the steps in `argocd.md`
