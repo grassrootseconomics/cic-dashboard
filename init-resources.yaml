@@ -124,6 +124,12 @@ spec:
   tls:
     secretName: vault.PROD_DOMAIN.cert
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-auth
+  namespace: grassroots
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -136,7 +142,26 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: vault-auth
-    namespace: default
+    namespace: grassroots
+# External Secrets
+apiVersion: external-secrets.io/v1alpha1
+kind: SecretStore
+metadata:
+  name: vault-backend
+  namespace: grassroots
+spec:
+  provider:
+    vault:
+      server: "http://vault:8200"
+      path: "kv"
+      version: "v2"
+      auth:
+        kubernetes:
+          mountPath: "kubernetes"
+          role: "apps"
+          serviceAccountRef:
+            name: "vault-auth"
+            namespace: grassroots
 # Argo Workflows Authorization
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
