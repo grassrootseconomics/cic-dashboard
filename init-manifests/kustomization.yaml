@@ -4,3 +4,5 @@ resources:
   - vault.yaml
   - external-secrets.yaml
   - gatus.yaml
+  - prometheus.yaml
+  - grafana.yaml

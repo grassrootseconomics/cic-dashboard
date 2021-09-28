@@ -1,0 +1,32 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana.stormspirit.tech
+  namespace: grassroots
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: grafana.stormspirit.tech
+  secretName: grafana.stormspirit.tech.cert
+  dnsNames:
+    - grafana.stormspirit.tech
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana
+  namespace: grassroots
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`grafana.stormspirit.tech`)
+      services:
+        - name: kube-prometheus-stack-grafana
+          port: 80
+  tls:
+    secretName: grafana.stormspirit.tech.cert

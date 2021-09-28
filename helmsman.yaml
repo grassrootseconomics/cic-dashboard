@@ -18,6 +18,7 @@ helmRepos:
   jetstack: https://charts.jetstack.io
   external-secrets: https://charts.external-secrets.io
   gatus: https://avakarev.github.io/gatus-chart
+  prometheus-community: https://prometheus-community.github.io/helm-charts
 
 apps:
   argocd:
@@ -80,3 +81,9 @@ apps:
     chart: gatus/gatus
     version: 1.1.4
     valuesFile: helm-values/gatus.yaml
+  kube-prometheus-stack:
+    name: kube-prometheus-stack
+    namespace: grassroots
+    enabled: true
+    chart: prometheus-community/kube-prometheus-stack
+    version: 18.1.1
