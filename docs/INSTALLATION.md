@@ -32,7 +32,7 @@ More information and gotchas about individual resources is available in the comp
 
 The `init-resources.yaml` applies `Roles`,`RoleBindings`,`IngressRoutes` and `Certificates` for the core components.
 
-1. `kubectl apply -k init-resources`
+1. `kubectl apply -k init-manifests`
 
 #### 4. Configure Vault
 
