@@ -5,7 +5,7 @@
 - Argo CD
 - Argo Workflows (_pre-configured and ready for use_)
 - Postgres Operator by Zalando
-- External Secrets Operator
+- External Secrets Operator (_pre-configured and ready for use_)
 - Vault
 
 More information and gotchas about individual resources is available in the components folder.
@@ -14,7 +14,6 @@ More information and gotchas about individual resources is available in the comp
 
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/)
 - [`helmsman`](https://github.com/Praqma/helmsman) (including its dependenceies i.e. helm and helm-diff)
-- [`argo`](https://github.com/argoproj/argo-workflows/releases) (optional if you want to run workflows)
 - Kube config file is availble on path (`kubectl cluster-info`)
 - Freshly provisioned Kubernetes cluster on DigitalOcean
 
@@ -29,8 +28,6 @@ More information and gotchas about individual resources is available in the comp
 2. Replace the placeholder domain name in `init-resources` with your domain
 
 #### 3. Configure core resources
-
-The `init-resources.yaml` applies `Roles`,`RoleBindings`,`IngressRoutes` and `Certificates` for the core components.
 
 1. `kubectl apply -k init-manifests`
 
