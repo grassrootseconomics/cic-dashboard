@@ -5,6 +5,7 @@ additionalArguments:
   - --entrypoints.web.http.redirections.entrypoint.permanent=true
   - --entrypoints.web.http.redirections.entrypoint.priority=10
   - --providers.kubernetesIngress.ingressClass=traefik-cert-manager
+  - --ping=true
 ingressRoute:
   dashboard:
     enabled: false

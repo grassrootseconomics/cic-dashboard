@@ -1,0 +1,52 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault.stormspirit.tech
+  namespace: grassroots
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: vault.stormspirit.tech
+  secretName: vault.stormspirit.tech.cert
+  dnsNames:
+    - vault.stormspirit.tech
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: vault-server
+  namespace: grassroots
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`vault.stormspirit.tech`)
+      kind: Rule
+      services:
+        - name: vault
+          port: 8200
+  tls:
+    secretName: vault.stormspirit.tech.cert
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-auth
+  namespace: grassroots
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-tokenreview-binding
+  namespace: grassroots
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: vault-auth
+    namespace: grassroots

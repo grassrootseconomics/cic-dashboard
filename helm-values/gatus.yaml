@@ -1,0 +1,13 @@
+# Observibility from an external view point for services that are exposed
+config:
+  services:
+    - name: Vault External
+      url: https://vault.stormspirit.tech/v1/sys/health
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 300"
+    - name: ArgoCD External
+      url: https://argocd.stormspirit.tech/api/version
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 300"

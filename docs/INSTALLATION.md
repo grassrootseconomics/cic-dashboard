@@ -26,13 +26,13 @@ More information and gotchas about individual resources is available in the comp
 #### 2. Update DNS records
 
 1. Update DNS records as per the list in `DNS.md`
-2. Replace `PROD_DOMAIN` in `init-resources.yaml` with your domain e.g. `sed -i "s/PROD_DOMAIN/grassrootseconomics.net/g" init_resources.yaml`
+2. Replace the placeholder domain name in `init-resources` with your domain
 
 #### 3. Configure core resources
 
 The `init-resources.yaml` applies `Roles`,`RoleBindings`,`IngressRoutes` and `Certificates` for the core components.
 
-1. `kubectl apply -f init-resources.yaml`
+1. `kubectl apply -k init-resources`
 
 #### 4. Configure Vault
 
