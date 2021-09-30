@@ -26,7 +26,7 @@ spec:
     - match: Host(`vault.stormspirit.tech`)
       kind: Rule
       services:
-        - name: vault
+        - name: vault-active
           port: 8200
   tls:
     secretName: vault.stormspirit.tech.cert
