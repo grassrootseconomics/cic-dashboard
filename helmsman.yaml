@@ -88,10 +88,11 @@ apps:
     enabled: true
     chart: vm/victoria-metrics-operator
     version: 0.3.0
+  # indempotency bug with grafana, tracking at Praqma/helmsman#629
   grafana:
     name: grafana
     namespace: grassroots
-    enabled: true
+    enabled: false
     chart: grafana/grafana
     version: 6.16.10
     valuesFile: helm-values/grafana.yaml
