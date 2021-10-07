@@ -1,3 +1,38 @@
 persistence:
   enabled: true
-  size: 1Gi
+  size: 4Gi
+datasources: 
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://vmsingle-main.grassroots.svc:8429
+      isDefault: true
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki.grassroots.svc:3100
+dashboardProviders: 
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: default
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default      
+dashboards:
+  default:
+    victoria-metrics:
+      gnetId: 10229
+      revision: 21
+      datasource: Prometheus
+    cadvisor:
+      gnetId: 14205
+      revision: 1
+      datasource: Prometheus   
