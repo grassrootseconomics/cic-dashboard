@@ -1,0 +1,4 @@
+resources:
+  - gatus.yaml
+  - grafana.yaml
+  - vm.yaml

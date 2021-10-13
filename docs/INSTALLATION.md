@@ -43,4 +43,3 @@ More information and gotchas about individual resources is available in the comp
 #### 6. Sump Grafana Password
 
 1. Dump the admin password with `kubectl -n grassroots get secret grafana -o jsonpath="{.data.admin-password}" | base64 -d`
-   `

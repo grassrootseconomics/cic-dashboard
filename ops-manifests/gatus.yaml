@@ -4,7 +4,7 @@ metadata:
   name: gatus.stormspirit.tech
   namespace: gatus
   labels:
-    "use-http01-solver": "true"
+    'use-http01-solver': 'true'
 spec:
   commonName: gatus.stormspirit.tech
   secretName: gatus.stormspirit.tech.cert

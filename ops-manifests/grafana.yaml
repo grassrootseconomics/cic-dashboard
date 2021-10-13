@@ -4,7 +4,7 @@ metadata:
   name: grafana.stormspirit.tech
   namespace: grassroots
   labels:
-    "use-http01-solver": "true"
+    'use-http01-solver': 'true'
 spec:
   commonName: grafana.stormspirit.tech
   secretName: grafana.stormspirit.tech.cert
