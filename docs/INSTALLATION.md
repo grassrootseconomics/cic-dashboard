@@ -39,3 +39,8 @@ More information and gotchas about individual resources is available in the comp
 
 1. Dump the admin password with `kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
 2. Follow the steps in `argocd.md`
+
+#### 6. Sump Grafana Password
+
+1. Dump the admin password with `kubectl -n grassroots get secret grafana -o jsonpath="{.data.admin-password}" | base64 -d`
+   `
