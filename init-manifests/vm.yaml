@@ -4,7 +4,7 @@ metadata:
   name: main
   namespace: grassroots
 spec:
-  retentionPeriod: "3"
+  retentionPeriod: '3'
   removePvcAfterDelete: false
   storage:
     accessModes:
@@ -17,6 +17,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAgent
 metadata:
   name: main
+  namespace: grassroots
 spec:
   serviceScrapeNamespaceSelector: {}
   serviceScrapeSelector: {}
@@ -28,18 +29,19 @@ spec:
   nodeScrapeNamespaceSelector: {}
   replicaCount: 1
   remoteWrite:
-    - url: "http://vmsingle-main.grassroots.svc:8429/api/v1/write"
+    - url: 'http://vmsingle-main.grassroots.svc:8429/api/v1/write'
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMNodeScrape
 metadata:
   name: cadvisor-metrics
+  namespace: grassroots
 spec:
-  scheme: "https"
+  scheme: 'https'
   tlsConfig:
     insecureSkipVerify: true
-    caFile: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-  bearerTokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    caFile: '/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+  bearerTokenFile: '/var/run/secrets/kubernetes.io/serviceaccount/token'
   relabelConfigs:
     - action: labelmap
       regex: __meta_kubernetes_node_label_(.+)
@@ -52,14 +54,14 @@ spec:
   metricRelabelConfigs:
     - action: replace
       source_labels: [pod]
-      regex: "(.+)"
+      regex: '(.+)'
       target_label: pod_name
-      replacement: "${1}"
+      replacement: '${1}'
     - action: replace
       source_labels: [container]
-      regex: "(.+)"
+      regex: '(.+)'
       target_label: container_name
-      replacement: "${1}"
+      replacement: '${1}'
     - action: replace
       target_label: name
       replacement: k8s_stub
@@ -67,4 +69,4 @@ spec:
       source_labels: [id]
       regex: '^/system\.slice/(.+)\.service$'
       target_label: systemd_service_name
-      replacement: "${1}"
+      replacement: '${1}'
