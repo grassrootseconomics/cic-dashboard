@@ -20,6 +20,7 @@ helmRepos:
   gatus: https://avakarev.github.io/gatus-chart
   vm: https://victoriametrics.github.io/helm-charts/
   grafana: https://grafana.github.io/helm-charts
+  bitnami: https://charts.bitnami.com/bitnami
 
 apps:
   argocd:
@@ -75,6 +76,13 @@ apps:
     chart: https://opensource.zalando.com/postgres-operator/charts/postgres-operator/postgres-operator-1.7.0.tgz
     version: 1.7.0
     valuesFile: helm-values/postgres-operator.yaml
+  redis:
+    name: redis
+    namespace: grassroots
+    enabled: true
+    chart: bitnami/redis
+    version: 15.4.1
+    valuesFile: helm-values/redis.yaml
   gatus:
     name: gatus
     namespace: gatus

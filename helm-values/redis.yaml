@@ -1,0 +1,4 @@
+auth:
+  enabled: true
+metrics:
+  enabled: true

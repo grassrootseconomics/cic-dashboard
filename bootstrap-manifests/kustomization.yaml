@@ -3,6 +3,3 @@ resources:
   - argo-cd.yaml
   - vault.yaml
   - external-secrets.yaml
-  - gatus.yaml
-  - grafana.yaml
-  - vm.yaml

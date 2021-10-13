@@ -1,7 +1,21 @@
 configKubernetes:
   spilo_privileged: true
-configKubernetes:
   pod_environment_secret: walg-env
 configAwsOrGcp:
   wal_s3_bucket: pgwal
-  
+configLogicalBackup:
+  # logical_backup_docker_image: 'registry.opensource.zalan.do/acid/logical-backup:v1.7.0'
+  # logical_backup_job_prefix: 'logical-backup-'
+  # logical_backup_provider: 's3'
+  # logical_backup_s3_access_key_id: 'jxdolsjzggqyq4bdxitvxrbgia4q'
+  # # S3 bucket to store backup results
+  # logical_backup_s3_bucket: 'pglogical'
+  # # S3 region of bucket
+  # logical_backup_s3_region: ''
+  # # S3 endpoint url when not using AWS
+  # logical_backup_s3_endpoint: 'https://gateway.eu1.storjshare.io'
+  # # S3 Secret Access Key
+  # logical_backup_s3_secret_access_key: 'jy3lz7w7bspgqxtwdbxo7o4gu4wlmukkwinef7tdinwqndqu2dfae'
+  # # S3 server side encryption
+  # logical_backup_s3_sse: ''
+  # logical_backup_schedule: '*/5 * * * *'

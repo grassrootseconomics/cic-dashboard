@@ -1,0 +1,41 @@
+# TODO: - update sizes and team name
+#       - enableLogicalBackup: true (if needed)
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  labels:
+    team: acid
+  name: acid-cic-test
+  namespace: grassroots
+spec:
+  allowedSourceRanges: null
+  databases:
+    postgres: postgres
+  enableConnectionPooler: true
+  numberOfInstances: 2
+  postgresql:
+    version: '12'
+  teamId: acid
+  users:
+    postgres:
+      - superuser
+      - createdb
+  volume:
+    size: 2Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: walg-env
+type: Opaque
+stringData:
+  BACKUP_SCHEDULE: '*/5 * * * *'
+  USE_WALG_BACKUP: 'true'
+  USE_WALG_RESTORE: 'true'
+  # TODO: convert to external-secrets type
+  AWS_ACCESS_KEY_ID: 'jvorys7keokjoqpjv6aeku3fbzqq'
+  AWS_SECRET_ACCESS_KEY: 'j23qpf3gwgzwvdlyqqfzf4vetl3oce7axvkfwsturf73ztw6jrux4'
+  AWS_ENDPOINT: 'https://gateway.eu1.storjshare.io'
+  AWS_REGION: ''
+  BACKUP_NUM_TO_RETAIN: '100'
+  WALG_COMPRESSION_METHOD: 'brotli'
