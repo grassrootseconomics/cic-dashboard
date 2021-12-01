@@ -1,5 +1,0 @@
-resources:
-  - cert-issuer.yaml
-  - argo-cd.yaml
-  - vault.yaml
-  - external-secrets.yaml

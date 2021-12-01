@@ -1,5 +1,0 @@
-redis:
-  enabled: true
-server:
-  extraArgs:
-    - --insecure
