@@ -1,0 +1,27 @@
+site_name: Devops Docs
+theme:
+  name: material
+  palette:
+    primary: black
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+extra:
+  social:
+    - icon: fontawesome/brands/gitlab
+      link: https://gitlab.com/grassrootseconomics
+nav:
+  - index.md
+  - Infrastructure:
+      - infrastructure/kubernetes.md
+  - Components:
+      - components/vault.md
+      - External Secrets: components/external-secrets.md
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.details
+  - admonition

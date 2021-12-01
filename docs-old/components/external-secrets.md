@@ -1,10 +1,13 @@
+### External Secrets Operator
+
+- namespace: grassroots
+- docs: https://external-secrets.io
+
+#### Setup and configuration
+
 External Secrets Operator is responsible for syncing secrets from Vault.
 
-### Defining Vault SecretStore
-
-!!! info
-
-    This resource is automatically deployed by Helmsman
+**1. Defining Vault SecretStore**
 
 ```yaml
 apiVersion: external-secrets.io/v1alpha1
@@ -16,25 +19,26 @@ spec:
   provider:
     vault:
       server: "http://vault:8200"
-      # vault setup step 2
+      # vault.md step 2
       path: "kv"
       version: "v2"
       auth:
-        # vault setup 3
+        # vault.md step 3
         kubernetes:
           mountPath: "kubernetes"
-          # vault setup step 5
+          # vault.md step 5
           role: "apps"
+          #  init-resources.yaml
           serviceAccountRef:
             name: "vault-auth"
             namespace: grassroots
 ```
 
-### Creating a secret
+**2. Creating a sample secret**
 
 It is important to understand the concept of creating secrets from the docs provided above before proceeding.
 
-_This will pull the sample secret created in [here](../components/vault.md)_
+_This will pull the secret created in `vault.md`_
 
 ```yaml
 apiVersion: external-secrets.io/v1alpha1

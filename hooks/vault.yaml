@@ -1,15 +1,15 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: vault.stormspirit.tech
+  name: vault.prod.grassecon.org
   namespace: grassroots
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: vault.stormspirit.tech
-  secretName: vault.stormspirit.tech.cert
+  commonName: vault.prod.grassecon.org
+  secretName: vault.prod.grassecon.org.cert
   dnsNames:
-    - vault.stormspirit.tech
+    - vault.prod.grassecon.org
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -23,13 +23,13 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`vault.stormspirit.tech`)
+    - match: Host(`vault.prod.grassecon.org`)
       kind: Rule
       services:
-        - name: vault-active
+        - name: vault-internal
           port: 8200
   tls:
-    secretName: vault.stormspirit.tech.cert
+    secretName: vault.prod.grassecon.org.cert
 ---
 apiVersion: v1
 kind: ServiceAccount

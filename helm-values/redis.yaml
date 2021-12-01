@@ -1,4 +1,10 @@
+architecture: standalone
 auth:
   enabled: true
+  existingSecret: redis-creds
+  existingSecretPasswordKey: password
 metrics:
   enabled: true
+master:
+  persistence:
+    existingClaim: redis-restored-pvc

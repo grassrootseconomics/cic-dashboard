@@ -2,17 +2,10 @@ metadata:
   org: gitlab.com/grassrootseconomics
 
 namespaces:
-  argo:
-    protected: false
-  traefik:
-    protected: false
   grassroots:
-    protected: false
-  gatus:
     protected: false
 
 helmRepos:
-  argocd: https://argoproj.github.io/argo-helm
   traefik: https://helm.traefik.io/traefik
   hashicorp: https://helm.releases.hashicorp.com
   jetstack: https://charts.jetstack.io
@@ -23,52 +16,44 @@ helmRepos:
   bitnami: https://charts.bitnami.com/bitnami
 
 apps:
-  argocd:
-    name: argocd
-    priority: -1
-    namespace: argo
-    enabled: true
-    chart: argocd/argo-cd
-    version: 3.21.0
-    valuesFile: helm-values/argocd.yaml
-  argo-workflows:
-    name: argo-workflows
-    namespace: argo
-    enabled: false
-    chart: argocd/argo-workflows
-    version: 0.6.0
-    setString:
-      controller.containerRuntimeExecutor: k8sapi
   traefik:
     name: traefik
+    protected: true
     priority: -3
-    namespace: traefik
+    namespace: grassroots
     enabled: true
     chart: traefik/traefik
-    version: 10.3.4
+    version: 10.6.2
     valuesFile: helm-values/traefik.yaml
   cert-manager:
     name: cert-manager
+    protected: false
     priority: -2
-    namespace: traefik
+    namespace: grassroots
     enabled: true
     chart: jetstack/cert-manager
     version: 1.5.3
     setString:
       installCRDs: true
-  external-secrets-operator:
-    name: external-secrets-operator
-    namespace: grassroots
-    enabled: true
-    chart: external-secrets/external-secrets
-    version: 0.3.5
+    hooks:
+      postInstall: hooks/cert-issuer.yaml
   vault:
     name: vault
     namespace: grassroots
     enabled: true
     chart: hashicorp/vault
-    version: 0.16.0
+    version: 0.18.0
     valuesFile: helm-values/vault.yaml
+    hooks:
+      postInstall: hooks/vault.yaml
+  external-secrets-operator:
+    name: external-secrets-operator
+    namespace: grassroots
+    enabled: true
+    chart: external-secrets/external-secrets
+    version: 0.3.8
+    hooks:
+      postInstall: hooks/external-secrets.yaml
   postgres-operator:
     name: postgres-operator
     namespace: grassroots
@@ -81,11 +66,13 @@ apps:
     namespace: grassroots
     enabled: true
     chart: bitnami/redis
-    version: 15.4.1
+    version: 15.6.0
     valuesFile: helm-values/redis.yaml
+    hooks:
+      preInstall: hooks/redis-creds.yaml
   gatus:
     name: gatus
-    namespace: gatus
+    namespace: grassroots
     enabled: true
     chart: gatus/gatus
     version: 1.1.4

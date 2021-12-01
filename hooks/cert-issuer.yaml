@@ -4,8 +4,8 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    email: mohamedsohailazim@gmail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: sohailazim@riseup.net
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: issuer-account-key
     solvers:
