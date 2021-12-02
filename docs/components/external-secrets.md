@@ -60,3 +60,17 @@ spec:
         key: apps/helloworld
         property: password
 ```
+
+And produce a `Secret` resource:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-test-secret
+  namespace: grassroots
+data:
+  password: MTIzeGQ=
+  username: dGVzdA==
+type: Opaque
+```

@@ -58,9 +58,11 @@ apps:
     name: postgres-operator
     namespace: grassroots
     enabled: true
-    chart: https://opensource.zalando.com/postgres-operator/charts/postgres-operator/postgres-operator-1.7.0.tgz
-    version: 1.7.0
+    chart: https://opensource.zalando.com/postgres-operator/charts/postgres-operator/postgres-operator-1.7.1.tgz
+    version: 1.7.1
     valuesFile: helm-values/postgres-operator.yaml
+    hooks:
+      postInstall: hooks/postgres.yaml
   redis:
     name: redis
     namespace: grassroots

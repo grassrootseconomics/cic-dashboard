@@ -18,6 +18,7 @@ nav:
   - Components:
       - components/vault.md
       - External Secrets: components/external-secrets.md
+      - components/postgres.md
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
