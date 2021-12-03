@@ -1,0 +1,39 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  labels:
+    team: acid
+  name: acid-cic-prod
+  namespace: grassroots
+spec:
+  allowedSourceRanges: null
+  databases:
+    postgres: postgres
+  enableConnectionPooler: true
+  numberOfInstances: 2
+  postgresql:
+    version: "12"
+  teamId: acid
+  users:
+    postgres:
+      - superuser
+      - createdb
+  volume:
+    size: 5Gi
+  sidecars:
+    - env:
+        - name: DATA_SOURCE_URI
+          value: 127.0.0.1:5432/postgres?sslmode=disable
+        - name: DATA_SOURCE_USER
+          value: postgres
+        - name: DATA_SOURCE_PASS
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres.acid-cic-prod.credentials.postgresql.acid.zalan.do
+      image: prometheuscommunity/postgres-exporter:v0.10.0
+      name: exporter
+      ports:
+        - containerPort: 9187
+          name: metrics
+          protocol: TCP

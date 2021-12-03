@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg-logical-backup
+  namespace: grassroots
+spec:
+  selector:
+    matchLabels:
+      app: pg-logical-backup
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pg-logical-backup
+    spec:
+      containers:
+        - name: postgresql
+          image: itbm/postgresql-backup-s3
+          imagePullPolicy: Always
+          env:
+            - name: POSTGRES_DATABASE
+              value: "all"
+            - name: POSTGRES_HOST
+              value: "acid-cic-repl"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres.acid-cic-prod.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: walg-env
+                  key: AWS_ACCESS_KEY_ID
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: walg-env
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: S3_BUCKET
+              value: "pg-logical"
+            - name: S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: walg-env
+                  key: AWS_ENDPOINT
+            - name: SCHEDULE
+              value: "@every 2h"
+            - name: DELETE_OLDER_THAN
+              value: "90 days ago"
+            - name: S3_S3V4
+              value: "yes"
+            - name: S3_REGION
+              value: ""

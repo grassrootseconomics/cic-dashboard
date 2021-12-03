@@ -35,8 +35,6 @@ apps:
     version: 1.5.3
     setString:
       installCRDs: true
-    hooks:
-      postInstall: hooks/cert-issuer.yaml
   vault:
     name: vault
     namespace: grassroots
@@ -44,16 +42,12 @@ apps:
     chart: hashicorp/vault
     version: 0.18.0
     valuesFile: helm-values/vault.yaml
-    hooks:
-      postInstall: hooks/vault.yaml
   external-secrets-operator:
     name: external-secrets-operator
     namespace: grassroots
     enabled: true
     chart: external-secrets/external-secrets
     version: 0.3.8
-    hooks:
-      postInstall: hooks/external-secrets.yaml
   postgres-operator:
     name: postgres-operator
     namespace: grassroots
@@ -61,37 +55,26 @@ apps:
     chart: https://opensource.zalando.com/postgres-operator/charts/postgres-operator/postgres-operator-1.7.1.tgz
     version: 1.7.1
     valuesFile: helm-values/postgres-operator.yaml
-    hooks:
-      postInstall: hooks/postgres.yaml
   redis:
     name: redis
     namespace: grassroots
     enabled: true
     chart: bitnami/redis
-    version: 15.6.0
+    version: 15.6.3
     valuesFile: helm-values/redis.yaml
-    hooks:
-      preInstall: hooks/redis-creds.yaml
-  gatus:
-    name: gatus
-    namespace: grassroots
-    enabled: true
-    chart: gatus/gatus
-    version: 1.1.4
-    valuesFile: helm-values/gatus.yaml
   vm:
     name: vm
     namespace: grassroots
     enabled: true
     chart: vm/victoria-metrics-operator
-    version: 0.3.0
+    version: 0.5.1
   grafana:
     name: grafana
     protected: true
     namespace: grassroots
     enabled: true
     chart: grafana/grafana
-    version: 6.16.10
+    version: 6.17.10
     valuesFile: helm-values/grafana.yaml
   loki:
     name: loki
@@ -100,3 +83,10 @@ apps:
     chart: grafana/loki-stack
     version: 2.4.1
     valuesFile: helm-values/loki-stack.yaml
+  gatus:
+    name: gatus
+    namespace: grassroots
+    enabled: true
+    chart: gatus/gatus
+    version: 1.1.4
+    valuesFile: helm-values/gatus.yaml

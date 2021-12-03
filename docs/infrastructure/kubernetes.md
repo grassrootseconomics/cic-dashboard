@@ -50,6 +50,12 @@ helmsman --apply --target traefik -f helmsman.yaml
 helmsman --apply --target cert-manager -f helmsman.yaml
 ```
 
+7. Create CertIssuer resource
+
+```
+kubectl apply -f ops-manifests/cert-issuer.yaml
+```
+
 You should now see all the worker nodes attached to the load balancer with a healthy status on Digital Ocean.
 
 ### DNS Setup
@@ -69,6 +75,12 @@ Create a Vault server with:
 helmsman --apply --target vault -f helmsman.yaml
 ```
 
+Create Ingress, ServiceAccount and ClusterRoleBinding resources:
+
+```bash
+kubectl apply -R -f ops-manifests/vault
+```
+
 !!! warning
 
     Complete the Vault setup as described [here](../components/vault.md) before proceeding.
@@ -80,3 +92,25 @@ Deploy External Secrets Operator with:
 ```bash
 helmsman --apply --target external-secrets-operator -f helmsman.yaml
 ```
+
+Add Vault as the secrets backend:
+
+```bash
+kubectl apply -f ops-manifests/external-secrets-store.yaml
+```
+
+### Postgres Setup
+
+1. Deploy the operator:
+
+```bash
+helmsman --apply --target postgres-operator -f helmsman.yaml
+```
+
+2. Create the Postgres cluster, logical backup job and metrics exporter:
+
+```bash
+kubectl apply -R -f ops-manifest/postgres
+```
+
+### Redis Setup
