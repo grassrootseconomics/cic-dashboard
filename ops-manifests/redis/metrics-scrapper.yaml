@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: redis-scrape
+  namespace: grassroots
+spec:
+  targetEndpoints:
+    - targets: ["redis-metrics:9121"]
+      port: "metrics"
+      path: "metrics"

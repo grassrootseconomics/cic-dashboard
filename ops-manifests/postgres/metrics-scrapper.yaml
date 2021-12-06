@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: pg-scrape
+  namespace: grassroots
+spec:
+  targetEndpoints:
+    - targets: ["pg-exporter:9187"]
+      port: "exporter"
+      path: "metrics"
