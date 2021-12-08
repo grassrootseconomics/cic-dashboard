@@ -1,5 +1,0 @@
-resources:
-  - gatus.yaml
-  - grafana.yaml
-  - vm.yaml
-  - postgres.yaml
