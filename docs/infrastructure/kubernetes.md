@@ -123,4 +123,4 @@ helmsman --apply --target redis -f helmsman.yaml
 
 ### Other Ops
 
-Install the monitoring and other operational charts as needed from the Helmsman file.
+Install the monitoring and other operational charts as needed from the Helmsman file. Refer to the `ops-manifests` folder for more manifests.
