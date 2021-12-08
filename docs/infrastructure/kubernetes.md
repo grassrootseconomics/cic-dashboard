@@ -114,3 +114,13 @@ kubectl apply -R -f ops-manifest/postgres
 ```
 
 ### Redis Setup
+
+1. Deploy:
+
+```bash
+helmsman --apply --target redis -f helmsman.yaml
+```
+
+### Other Ops
+
+Install the monitoring and other operational charts as needed from the Helmsman file.

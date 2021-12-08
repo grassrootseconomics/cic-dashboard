@@ -34,7 +34,7 @@ The operator ships WAL files with [WAL-G](https://github.com/wal-g/wal-g) every 
 
 Logical backups of all databases within the Postgres instance are shipped every 2 hours. Cleanup policy is 90 days.
 
-#### Metrics
+### Metrics
 
 Use Grafana:
 
