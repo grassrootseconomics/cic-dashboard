@@ -1,0 +1,18 @@
+image:
+  tag: "12.10.0"
+auth:
+  existingSecret: postgres-credentials
+  database: postgres
+volumePermissions:
+  enabled: true
+primary:
+  initdb:
+    scriptsConfigMap: postgres-initdb-scipts
+    user: postgres
+replication:
+  readReplicas: 0
+metrics:
+  enabled: true
+audit:
+  logConnections: true
+  logHostname: true

@@ -1,0 +1,17 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: pg-scrape
+  namespace: grassroots
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/name: postgresql
+  namespaceSelector:
+    matchNames:
+      - grassroots
+  endpoints:
+    - targetPort: 9187
+      scheme: http
+      path: metrics

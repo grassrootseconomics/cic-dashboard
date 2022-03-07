@@ -4,14 +4,14 @@ metadata:
   name: main
   namespace: grassroots
 spec:
-  retentionPeriod: "3"
+  retentionPeriod: "2"
   removePvcAfterDelete: false
   storage:
     accessModes:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
+        storage: 8Gi
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAgent
@@ -19,14 +19,7 @@ metadata:
   name: main
   namespace: grassroots
 spec:
-  serviceScrapeNamespaceSelector: {}
-  serviceScrapeSelector: {}
-  podScrapeNamespaceSelector: {}
-  podScrapeSelector: {}
-  staticScrapeSelector: {}
-  staticScrapeNamespaceSelector: {}
-  nodeScrapeSelector: {}
-  nodeScrapeNamespaceSelector: {}
+  selectAllByDefault: true
   replicaCount: 1
   remoteWrite:
     - url: "http://vmsingle-main.grassroots.svc:8429/api/v1/write"

@@ -1,0 +1,16 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: traefik-scrape
+  namespace: grassroots
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+  namespaceSelector:
+    matchNames:
+      - grassroots
+  endpoints:
+    - targetPort: 9100
+      scheme: http
+      path: metrics

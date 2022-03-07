@@ -1,4 +1,4 @@
 loki:
   persistence:
     enabled: true
-    size: 4Gi
+    size: 10Gi

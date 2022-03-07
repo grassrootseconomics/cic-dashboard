@@ -1,15 +1,15 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: grafana.prod.grassecon.org
+  name: grafana.grassecon.org
   namespace: grassroots
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: grafana.prod.grassecon.org
-  secretName: grafana.prod.grassecon.org.cert
+  commonName: grafana.grassecon.org
+  secretName: grafana.grassecon.org.cert
   dnsNames:
-    - grafana.prod.grassecon.org
+    - grafana.grassecon.org
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -24,9 +24,9 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`grafana.prod.grassecon.org`)
+      match: Host(`grafana.grassecon.org`)
       services:
         - name: grafana
           port: 80
   tls:
-    secretName: grafana.prod.grassecon.org.cert
+    secretName: grafana.grassecon.org.cert

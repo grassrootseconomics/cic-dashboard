@@ -1,0 +1,25 @@
+apiVersion: external-secrets.io/v1alpha1
+kind: ExternalSecret
+metadata:
+  name: postgres-credentials
+  namespace: grassroots
+spec:
+  refreshInterval: "1m"
+  secretStoreRef:
+    name: vault-backend
+    kind: SecretStore
+  target:
+    name: pgp-keys
+  data:
+    - secretKey: privatekey.asc
+      remoteRef:
+        key: pgp-keys
+        property: privatekey.asc
+    - secretKey: publickey.asc
+      remoteRef:
+        key: pgp-keys
+        property: publickey.asc
+    - secretKey: password
+      remoteRef:
+        key: pgp-keys
+        property: password

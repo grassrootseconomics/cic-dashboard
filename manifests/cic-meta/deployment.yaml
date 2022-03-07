@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-meta-server
+  labels:
+    app: cic-meta-server
+spec:
+  selector:
+    matchLabels:
+      app: cic-meta-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-meta-server
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-meta-server
+          image: docker.grassecon.net/cic-stack/cic-meta:0.5.55
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: PGP_PASSPHRASE
+              valueFrom:
+                secretKeyRef:
+                  name: pgp-keys
+                  key: password
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: cic-meta
+          ports:
+            - containerPort: 8000
+              name: cic-meta-server
+          volumeMounts:
+            - mountPath: /keys
+              readOnly: true
+              name: pgp
+      volumes:
+        - name: pgp
+          secret:
+            secretName: pgp-keys
+      restartPolicy: Always

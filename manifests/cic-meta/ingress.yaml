@@ -1,15 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: vault.grassecon.org
-  namespace: grassroots
+  name: meta.grassecon.org
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: vault.grassecon.org
-  secretName: vault.grassecon.org.cert
+  commonName: meta.grassecon.org
+  secretName: meta.grassecon.org.cert
   dnsNames:
-    - vault.grassecon.org
+    - meta.grassecon.org
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -17,16 +16,15 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: vault-server
-  namespace: grassroots
+  name: meta
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`vault.grassecon.org`)
+    - match: Host(`meta.grassecon.org`)
       kind: Rule
       services:
-        - name: vault-internal
-          port: 8200
+        - name: cic-meta-server
+          port: http
   tls:
-    secretName: vault.grassecon.org.cert
+    secretName: meta.grassecon.org.cert

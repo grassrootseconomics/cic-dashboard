@@ -1,0 +1,8 @@
+namespace: mookh
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+configMapGenerator:
+  - name: cic-meta
+    env: config.env

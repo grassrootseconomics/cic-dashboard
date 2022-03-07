@@ -1,6 +1,8 @@
 persistence:
   enabled: true
   size: 1Gi
+admin:
+  existingSecret: grafana-credentials
 datasources:
   datasources.yaml:
     apiVersion: 1
