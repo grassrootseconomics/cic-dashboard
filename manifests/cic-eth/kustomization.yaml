@@ -1,0 +1,14 @@
+namespace: grassroots
+resources:
+  - cic-eth-secrets.yaml
+  - signer-deployment.yaml
+  - signer-service.yaml
+  - tasker-deployment.yaml
+  - daemons.yaml
+configMapGenerator:
+  - name: cic-eth-tasker
+    env: cic-eth-tasker.env
+  - name: cic-signer
+    env: cic-signer.env
+  - name: daemons
+    env: daemons.env

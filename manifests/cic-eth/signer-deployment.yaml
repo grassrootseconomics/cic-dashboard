@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-signer
+  labels:
+    app: cic-signer
+spec:
+  selector:
+    matchLabels:
+      app: cic-signer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-signer
+        group: cic-stack
+        tier: queue
+    spec:
+      containers:
+        - name: cic-signer
+          image: docker.grassecon.net/cic-stack/funga-eth:0.5.55
+          imagePullPolicy: Always
+          # TODO: disable verbose logging
+          command: ["python", "/usr/local/bin/funga-ethd", "-vv"]
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: cic-signer
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: SIGNER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cic-eth
+                  key: signer-secret
+      restartPolicy: Always

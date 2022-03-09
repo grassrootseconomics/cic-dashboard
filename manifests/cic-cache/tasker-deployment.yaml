@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-cache-tasker
+  labels:
+    app: cic-cache-tasker
+spec:
+  selector:
+    matchLabels:
+      app: cic-cache-tasker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-cache-tasker
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-cache-tasker
+          image: docker.grassecon.net/cic-stack/cic-cache:0.5.55
+          imagePullPolicy: Always
+          command: ["/usr/local/bin/cic-cache-taskerd", "-vv"]
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: redis-common
+            - configMapRef:
+                name: evm-common
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+      restartPolicy: Always

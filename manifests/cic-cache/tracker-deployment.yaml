@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-cache-tracker
+  labels:
+    app: cic-cache-tracker
+spec:
+  selector:
+    matchLabels:
+      app: cic-cache-tracker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-cache-tracker
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-cache-tracker
+          image: docker.grassecon.net/cic-stack/cic-cache:0.5.55
+          command: ["./start_tracker.sh", "-vv"]
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: redis-common
+            - configMapRef:
+                name: evm-common
+            - configMapRef:
+                name: cic-cache
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: SERVER_PORT
+              value: "8000"
+      restartPolicy: Always

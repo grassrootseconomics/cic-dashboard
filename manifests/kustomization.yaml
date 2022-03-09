@@ -2,8 +2,14 @@ namespace: grassroots
 resources:
   - common/pgp-keys.yaml
   - cic-meta
+  - cic-eth
+  - cic-cache
+  - cic-notify
+  - cic-ussd
 configMapGenerator:
   - name: postgres-common
     env: common/postgres-common.env
   - name: redis-common
     env: common/redis-common.env
+  - name: evm-common
+    env: common/evm-common.env

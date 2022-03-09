@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-notify-tasker
+  labels:
+    app: cic-notify-tasker
+spec:
+  selector:
+    matchLabels:
+      app: cic-notify-tasker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-notify-tasker
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-notify-tasker
+          image: docker.grassecon.net/cic-stack/cic-notify:0.5.55
+          imagePullPolicy: Always
+          command: ["/usr/src/start_tasker.sh", "-q", "cic-notify", "-vv"]
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: redis-common
+            - configMapRef:
+                name: evm-common
+            - configMapRef:
+                name: cic-notify
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: AFRICASTALKING_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cic-notify
+                  key: key
+      restartPolicy: Always

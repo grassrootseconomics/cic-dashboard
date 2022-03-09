@@ -1,0 +1,30 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ussd.grassecon.org
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: ussd.grassecon.org
+  secretName: ussd.grassecon.org.cert
+  dnsNames:
+    - ussd.grassecon.org
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ussd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`ussd.grassecon.org`)
+      kind: Rule
+      services:
+        - name: cic-user-ussd-svc
+          port: server
+  tls:
+    secretName: ussd.grassecon.org.cert

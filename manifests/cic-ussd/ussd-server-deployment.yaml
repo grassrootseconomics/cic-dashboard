@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-user-ussd-server
+  labels:
+    app: cic-user-ussd-server
+spec:
+  selector:
+    matchLabels:
+      app: cic-user-ussd-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-user-ussd-server
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-user-ussd-server
+          image: docker.grassecon.net/cic-stack/cic-ussd:0.5.55
+          command: ["/root/start_cic_user_ussd_server.sh", "-vv"]
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: redis-common
+            - configMapRef:
+                name: evm-common
+            - configMapRef:
+                name: cic-ussd
+          env:
+            - name: SERVER_PORT
+              value: "9000"
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: APP_PASSWORD_PEPPER
+              valueFrom:
+                secretKeyRef:
+                  name: cic-ussd
+                  key: pepper
+            - name: PGP_PASSPHRASE
+              valueFrom:
+                secretKeyRef:
+                  name: pgp-keys
+                  key: password
+          ports:
+            - containerPort: 9000
+              name: server
+          volumeMounts:
+            - mountPath: /keys
+              readOnly: true
+              name: pgp
+      volumes:
+        - name: pgp
+          secret:
+            secretName: pgp-keys
+      restartPolicy: Always

@@ -1,0 +1,30 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cache.grassecon.org
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: cache.grassecon.org
+  secretName: cache.grassecon.org.cert
+  dnsNames:
+    - cache.grassecon.org
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cache
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cache.grassecon.org`)
+      kind: Rule
+      services:
+        - name: cic-cache-svc
+          port: server
+  tls:
+    secretName: cache.grassecon.org.cert

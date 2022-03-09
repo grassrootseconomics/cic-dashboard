@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-user-tasker
+  labels:
+    app: cic-user-tasker
+spec:
+  selector:
+    matchLabels:
+      app: cic-user-tasker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-user-tasker
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-user-tasker
+          image: docker.grassecon.net/cic-stack/cic-ussd:0.5.55
+          imagePullPolicy: Always
+          command: ["/root/start_cic_user_tasker.sh", "-q", "cic-ussd", "-vv"]
+          envFrom:
+            - configMapRef:
+                name: postgres-common
+            - configMapRef:
+                name: redis-common
+            - configMapRef:
+                name: evm-common
+            - configMapRef:
+                name: cic-ussd
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+            - name: APP_PASSWORD_PEPPER
+              valueFrom:
+                secretKeyRef:
+                  name: cic-ussd
+                  key: pepper
+            - name: PGP_PASSPHRASE
+              valueFrom:
+                secretKeyRef:
+                  name: pgp-keys
+                  key: password
+          volumeMounts:
+            - mountPath: /keys
+              readOnly: true
+              name: pgp
+      volumes:
+        - name: pgp
+          secret:
+            secretName: pgp-keys
+      restartPolicy: Always

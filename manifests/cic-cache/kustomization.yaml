@@ -1,0 +1,10 @@
+namespace: grassroots
+resources:
+  - server-deployment.yaml
+  - server-service.yaml
+  - tasker-deployment.yaml
+  - tracker-deployment.yaml
+  - ingress.yaml
+configMapGenerator:
+  - name: cic-cache
+    env: cic-cache.env

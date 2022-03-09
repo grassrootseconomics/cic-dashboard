@@ -1,0 +1,7 @@
+namespace: grassroots
+resources:
+  - cic-notify-secrets.yaml
+  - deployment.yaml
+configMapGenerator:
+  - name: cic-notify
+    env: cic-notify.env
