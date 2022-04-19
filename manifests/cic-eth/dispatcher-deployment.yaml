@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-eth-dispatcher
-          image: docker.grassecon.net/cic-stack/cic-eth:2e4eee5f
+          image: docker.grassecon.net/cic-stack/cic-eth:1e801786
           imagePullPolicy: Always
           command: ["./start_dispatcher.sh", "-v"]
           envFrom:

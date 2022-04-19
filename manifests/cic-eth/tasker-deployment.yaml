@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-eth-tasker
-          image: docker.grassecon.net/cic-stack/cic-eth:2e4eee5f
+          image: docker.grassecon.net/cic-stack/cic-eth:1e801786
           imagePullPolicy: Always
           # TODO: disable verbose logging post launch
           command: ["./start_tasker.sh", "--aux-all", "-q", "cic-eth", "-v"]
