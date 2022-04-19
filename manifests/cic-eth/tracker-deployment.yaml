@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cic-cache-tracker
+  name: cic-eth-tracker
   labels:
-    app: cic-cache-tracker
+    app: cic-eth-tracker
 spec:
   selector:
     matchLabels:
-      app: cic-cache-tracker
+      app: cic-eth-tracker
   replicas: 1
   template:
     metadata:
       labels:
-        app: cic-cache-tracker
+        app: cic-eth-tracker
         group: cic-stack
     spec:
       containers:
-        - name: cic-cache-tracker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.80
+        - name: cic-eth-tracker
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-eth:0.5.80
+          imagePullPolicy: Always
           command: ["./start_tracker.sh", "-v"]
           envFrom:
             - configMapRef:
@@ -27,13 +28,13 @@ spec:
             - configMapRef:
                 name: evm-common
             - configMapRef:
-                name: cic-cache
+                name: cic-eth
           env:
+            - name: CELERY_DEBUG_LOG
+              value: "1"
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres-password
-            - name: SERVER_PORT
-              value: "8000"
       restartPolicy: Always

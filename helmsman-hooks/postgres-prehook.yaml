@@ -11,5 +11,5 @@ data:
     CREATE DATABASE "cic_meta";
     CREATE DATABASE "cic_signer";
     CREATE DATABASE "cic_ussd";
-    CREATE DATABASE "cic_syncer";
-    GRANT ALL PRIVILEGES ON DATABASE "cic_cache", "cic_eth", "cic_notify", "cic_meta", "cic_signer", "cic_ussd", "cic_syncer" TO postgres;
+    CREATE DATABASE "cic_data";
+    GRANT ALL PRIVILEGES ON DATABASE "cic_cache", "cic_eth", "cic_notify", "cic_meta", "cic_signer", "cic_ussd", "cic_data" TO postgres;

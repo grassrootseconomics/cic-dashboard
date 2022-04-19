@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-user-tasker
-          image: docker.grassecon.net/cic-stack/cic-ussd:0.5.55
+          image: docker.grassecon.net/cic-stack/cic-ussd:balances
           imagePullPolicy: Always
           command: ["/root/start_cic_user_tasker.sh", "-q", "cic-ussd", "-vv"]
           envFrom:
@@ -35,11 +35,6 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres-password
-            - name: APP_PASSWORD_PEPPER
-              valueFrom:
-                secretKeyRef:
-                  name: cic-ussd
-                  key: pepper
             - name: PGP_PASSPHRASE
               valueFrom:
                 secretKeyRef:

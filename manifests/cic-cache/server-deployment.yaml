@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-cache-server
-          image: docker.grassecon.net/cic-stack/cic-cache:0.5.55
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.80
           imagePullPolicy: Always
           command:
             [
@@ -25,7 +25,7 @@ spec:
               "--wsgi-file=/root/cic_cache/runnable/daemons/server.py",
               "--http=:8000",
               "--pyargv",
-              "-vv",
+              "-v",
             ]
           envFrom:
             - configMapRef:

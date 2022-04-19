@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAgent
+metadata:
+  name: main
+  namespace: grassroots
+spec:
+  selectAllByDefault: true
+  replicaCount: 1
+  remoteWrite:
+    - url: "http://vmsingle-main.grassroots.svc:8429/api/v1/write"

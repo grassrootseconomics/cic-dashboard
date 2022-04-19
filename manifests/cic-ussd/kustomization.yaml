@@ -1,10 +1,7 @@
 namespace: grassroots
 resources:
-  - cic-ussd-secrets.yaml
-  - user-server-deployment.yaml
   - ussd-server-deployment.yaml
   - ussd-tasker-deployment.yaml
-  - user-server-service.yaml
   - ussd-server-service.yaml
   - ingress.yaml
 configMapGenerator:

@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: grassroots
+  name: ethstats-server
+  labels:
+    app: ethstats-server
+spec:
+  selector:
+    matchLabels:
+      app: ethstats-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ethstats-server
+        group: cic-stack
+    spec:
+      containers:
+        - name: ethstats-server
+          image: docker.grassecon.net/kitabu/ethstats-server:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: WS_SECRET
+              value: C54hHd3j
+          ports:
+            - containerPort: 3000
+              name: server
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: grassroots
+  name: ethstats-server-svc
+spec:
+  selector:
+    app: ethstats-server
+  type: ClusterIP
+  ports:
+    - name: server
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  namespace: grassroots
+  name: stats.kitabu.grassecon.org
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: stats.kitabu.grassecon.org
+  secretName: stats.kitabu.grassecon.org.cert
+  dnsNames:
+    - stats.kitabu.grassecon.org
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: grassroots
+  name: ethstats-server
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`stats.kitabu.grassecon.org`)
+      kind: Rule
+      services:
+        - name: ethstats-server-svc
+          port: server
+  tls:
+    secretName: stats.kitabu.grassecon.org.cert

@@ -20,7 +20,7 @@ helmRepos:
 apps:
   traefik:
     name: traefik
-    protected: false
+    protected: true
     priority: -3
     namespace: grassroots
     enabled: true
@@ -29,7 +29,7 @@ apps:
     valuesFile: helm-values/traefik.yaml
   cert-manager:
     name: cert-manager
-    protected: false
+    protected: true
     priority: -2
     namespace: grassroots
     enabled: true

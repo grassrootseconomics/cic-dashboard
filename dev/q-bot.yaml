@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: grassroots
+  name: q-bot
+  labels:
+    app: q-bot
+spec:
+  selector:
+    matchLabels:
+      app: q-bot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: q-bot
+        group: cic-stack
+    spec:
+      containers:
+        - name: q-bot
+          image: docker.grassecon.net/devops/q-bot:1.0.5
+          imagePullPolicy: Always
+          env:
+            - name: CELERY_BROKER
+              value: redis://redis-master
+            - name: MATTERMOST_WEBHOOK
+              value: https://chat.grassrootseconomics.net/hooks/xix9bxnfy7f47bmswisnng116h
+      restartPolicy: Always

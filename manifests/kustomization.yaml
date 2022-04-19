@@ -1,6 +1,7 @@
 namespace: grassroots
 resources:
   - common/pgp-keys.yaml
+  - rpc-node
   - cic-meta
   - cic-eth
   - cic-cache

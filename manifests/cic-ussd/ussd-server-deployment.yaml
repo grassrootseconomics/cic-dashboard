@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-user-ussd-server
-          image: docker.grassecon.net/cic-stack/cic-ussd:0.5.55
+          image: docker.grassecon.net/cic-stack/cic-ussd:balances
           command: ["/root/start_cic_user_ussd_server.sh", "-vv"]
           envFrom:
             - configMapRef:
@@ -36,11 +36,6 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres-password
-            - name: APP_PASSWORD_PEPPER
-              valueFrom:
-                secretKeyRef:
-                  name: cic-ussd
-                  key: pepper
             - name: PGP_PASSPHRASE
               valueFrom:
                 secretKeyRef:

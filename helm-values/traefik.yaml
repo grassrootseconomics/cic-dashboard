@@ -10,6 +10,7 @@ additionalArguments:
   - --entryPoints.websecure.proxyProtocol.trustedIPs=127.0.0.1/32,10.104.0.0/16
   - --entryPoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32,10.104.0.0/16
   - --entryPoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,10.104.0.0/16
+  # TODO: Check TCP forwarding with DO lb
 ingressRoute:
   dashboard:
     enabled: false

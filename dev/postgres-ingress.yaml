@@ -1,0 +1,29 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cwdtp3f.pg.grassecon.org
+  namespace: grassroots
+  labels:
+    "use-http01-solver": "true"
+spec:
+  commonName: cwdtp3f.pg.grassecon.org
+  secretName: cwdtp3f.pg.grassecon.org.cert
+  dnsNames:
+    - cwdtp3f.pg.grassecon.org
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: postgres-ingress
+  namespace: grassroots
+spec:
+  entryPoints:
+    - tcpep
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: postgres-postgresql
+          port: tcp-postgresql

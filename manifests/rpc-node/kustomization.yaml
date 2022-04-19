@@ -1,0 +1,10 @@
+namespace: grassroots
+resources:
+  - pvc.yaml
+  - ss_deployment.yaml
+  - service.yaml
+configMapGenerator:
+  - name: kitabu-node-config
+    files:
+      - configs/config.toml
+      - configs/kitabu.json

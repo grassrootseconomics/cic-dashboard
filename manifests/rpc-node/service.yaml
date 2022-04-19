@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kitabu-node
+spec:
+  selector:
+    app: kitabu-node
+  ports:
+    - name: eth-net
+      port: 30303
+      protocol: TCP
+    - name: rpc
+      port: 8547
+      protocol: TCP
+    - name: websocket
+      port: 8548
+      protocol: TCP

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: grassroots
+  name: ethstats-client
+  labels:
+    app: ethstats-client
+spec:
+  selector:
+    matchLabels:
+      app: ethstats-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ethstats-client
+        group: cic-stack
+    spec:
+      containers:
+        - name: ethstats-client
+          image: docker.grassecon.net/kitabu/ethstats-client:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: WS_SECRET
+              value: C54hHd3j
+            - name: RPC_HOST
+              value: http://kitabu-node:8547
+            - name: INSTANCE_NAME
+              value: k8s-cluster-node
+            - name: WS_SERVER
+              value: ws://ethstats-server-svc:80
+      restartPolicy: Always

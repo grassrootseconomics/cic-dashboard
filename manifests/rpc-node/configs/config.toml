@@ -1,0 +1,10 @@
+[parity]
+base_path = "/data"
+chain = "/config/kitabu.json"
+
+[network]
+max_peers = 1000
+
+[footprint]
+tracing = "on"
+pruning = "archive"

@@ -18,10 +18,10 @@ spec:
     spec:
       containers:
         - name: cic-signer
-          image: docker.grassecon.net/cic-stack/funga-eth:0.5.55
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/funga-eth:0.5.80
           imagePullPolicy: Always
           # TODO: disable verbose logging
-          command: ["python", "/usr/local/bin/funga-ethd", "-vv"]
+          command: ["python", "/usr/local/bin/funga-ethd", "-v"]
           ports:
             - containerPort: 8000
           envFrom:

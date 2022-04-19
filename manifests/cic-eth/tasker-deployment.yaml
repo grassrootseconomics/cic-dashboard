@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
         - name: cic-eth-tasker
-          image: docker.grassecon.net/cic-stack/cic-eth:0.5.55
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-eth:0.5.80
           imagePullPolicy: Always
           # TODO: disable verbose logging post launch
-          command: ["./start_tasker.sh", "--aux-all", "-q", "cic-eth", "-vv"]
+          command: ["./start_tasker.sh", "--aux-all", "-q", "cic-eth", "-v"]
           ports:
             - containerPort: 8000
           envFrom:
@@ -32,7 +32,11 @@ spec:
                 name: evm-common
             - configMapRef:
                 name: cic-eth-tasker
+            - configMapRef:
+                name: cic-eth
           env:
+            - name: CELERY_DEBUG_LOG
+              value: "1"
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:

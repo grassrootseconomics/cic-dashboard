@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: cic-notify-tasker
-          image: docker.grassecon.net/cic-stack/cic-notify:0.5.55
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-notify:0.5.80
           imagePullPolicy: Always
-          command: ["/usr/src/start_tasker.sh", "-q", "cic-notify", "-vv"]
+          command: ["/usr/src/start_tasker.sh", "-q", "cic-notify", "-v"]
           envFrom:
             - configMapRef:
                 name: postgres-common
