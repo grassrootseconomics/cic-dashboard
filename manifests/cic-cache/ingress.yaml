@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cache.grassecon.org
+  name: cache.sarafu.network
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: cache.grassecon.org
-  secretName: cache.grassecon.org.cert
+  commonName: cache.sarafu.network
+  secretName: cache.sarafu.network.cert
   dnsNames:
-    - cache.grassecon.org
+    - cache.sarafu.network
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -21,10 +21,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`cache.grassecon.org`)
+    - match: Host(`cache.sarafu.network`)
       kind: Rule
       services:
         - name: cic-cache-svc
           port: server
   tls:
-    secretName: cache.grassecon.org.cert
+    secretName: cache.sarafu.network.cert

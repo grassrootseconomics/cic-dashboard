@@ -6,10 +6,10 @@ additionalArguments:
   - --entrypoints.web.http.redirections.entrypoint.priority=10
   - --providers.kubernetesIngress.ingressClass=traefik-cert-manager
   - --ping=true
-  - --entryPoints.web.proxyProtocol.trustedIPs=127.0.0.1/32,10.104.0.0/16
-  - --entryPoints.websecure.proxyProtocol.trustedIPs=127.0.0.1/32,10.104.0.0/16
-  - --entryPoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32,10.104.0.0/16
-  - --entryPoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,10.104.0.0/16
+  - --entryPoints.web.proxyProtocol.trustedIPs=127.0.0.1/32,10.106.0.0/16
+  - --entryPoints.websecure.proxyProtocol.trustedIPs=127.0.0.1/32,10.106.0.0/16
+  - --entryPoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32,10.106.0.0/16
+  - --entryPoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,10.106.0.0/16
   # TODO: Check TCP forwarding with DO lb
 ingressRoute:
   dashboard:
@@ -19,9 +19,9 @@ ingressRoute:
       externalTrafficPolicy: Cluster
 service:
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "sarafu-production"
+    service.beta.kubernetes.io/do-loadbalancer-name: "sarafu-network"
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
-    service.beta.kubernetes.io/do-loadbalancer-hostname: "kube.grassecon.org"
+    service.beta.kubernetes.io/do-loadbalancer-hostname: "kube.sarafu.network"
 ports:
   metrics:
     expose: true

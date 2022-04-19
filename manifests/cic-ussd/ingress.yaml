@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ussd.grassecon.org
+  name: ussd.sarafu.network
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: ussd.grassecon.org
-  secretName: ussd.grassecon.org.cert
+  commonName: ussd.sarafu.network
+  secretName: ussd.sarafu.network.cert
   dnsNames:
-    - ussd.grassecon.org
+    - ussd.sarafu.network
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -21,10 +21,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`ussd.grassecon.org`)
+    - match: Host(`ussd.sarafu.network`)
       kind: Rule
       services:
         - name: cic-user-ussd-svc
           port: server
   tls:
-    secretName: ussd.grassecon.org.cert
+    secretName: ussd.sarafu.network.cert

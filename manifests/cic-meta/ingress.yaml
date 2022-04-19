@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: meta.grassecon.org
+  name: meta.sarafu.network
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: meta.grassecon.org
-  secretName: meta.grassecon.org.cert
+  commonName: meta.sarafu.network
+  secretName: meta.sarafu.network.cert
   dnsNames:
-    - meta.grassecon.org
+    - meta.sarafu.network
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -21,10 +21,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`meta.grassecon.org`)
+    - match: Host(`meta.sarafu.network`)
       kind: Rule
       services:
         - name: cic-meta-server
           port: http
   tls:
-    secretName: meta.grassecon.org.cert
+    secretName: meta.sarafu.network.cert

@@ -1,15 +1,15 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: vault.grassecon.org
+  name: vault.sarafu.network
   namespace: grassroots
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: vault.grassecon.org
-  secretName: vault.grassecon.org.cert
+  commonName: vault.sarafu.network
+  secretName: vault.sarafu.network.cert
   dnsNames:
-    - vault.grassecon.org
+    - vault.sarafu.network
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -23,10 +23,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`vault.grassecon.org`)
+    - match: Host(`vault.sarafu.network`)
       kind: Rule
       services:
         - name: vault-internal
           port: 8200
   tls:
-    secretName: vault.grassecon.org.cert
+    secretName: vault.sarafu.network.cert
