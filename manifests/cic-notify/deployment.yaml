@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-notify-tasker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-notify:0.5.80
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-notify:0.5.81
           imagePullPolicy: Always
           command: ["/usr/src/start_tasker.sh", "-q", "cic-notify", "-v"]
           envFrom:

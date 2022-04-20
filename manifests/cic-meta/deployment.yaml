@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-meta-server
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-meta:0.5.80
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-meta:0.5.81
           env:
             - name: DATABASE_PASSWORD
               valueFrom:

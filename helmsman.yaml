@@ -54,7 +54,7 @@ apps:
     version: 0.4.4
   postgres:
     name: postgres
-    protected: true
+    protected: false
     namespace: grassroots
     enabled: true
     chart: bitnami/postgresql
@@ -64,7 +64,7 @@ apps:
     valuesFile: helm-values/postgres.yaml
   redis:
     name: redis
-    protected: true
+    protected: false
     namespace: grassroots
     enabled: true
     chart: bitnami/redis
@@ -87,7 +87,7 @@ apps:
     valuesFile: helm-values/grafana.yaml
   loki:
     name: loki
-    protected: true
+    protected: false
     namespace: grassroots
     enabled: true
     chart: grafana/loki-stack
