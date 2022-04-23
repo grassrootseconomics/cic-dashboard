@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: cic-eth-tasker
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-eth-tasker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-eth:0.5.81
+          image: docker.grassecon.net/cic-stack/cic-eth:46545a6a
           imagePullPolicy: Always
           # TODO: disable verbose logging post launch
           command: ["./start_tasker.sh", "--aux-all", "-q", "cic-eth", "-v"]

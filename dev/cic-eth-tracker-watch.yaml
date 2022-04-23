@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: grassroots
+  name: cic-eth-tracker-watch
+  labels:
+    app: cic-eth-tracker-watch
+spec:
+  selector:
+    matchLabels:
+      app: cic-eth-tracker-watch
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-eth-tracker-watch
+        group: cic-stack
+    spec:
+      containers:
+        - name: cic-eth-tracker-watch
+          image: docker.grassecon.net/devops/cic-eth-tracker-watch:1.0.2
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              value: postgres-postgresql
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: postgres
+            - name: DB_NAME
+              value: cic_eth
+            - name: CLUSTER
+              value: grassecon_org
+            - name: NOTIFY_URL
+              value: https://chat.grassrootseconomics.net/hooks/rgw56g1hrigjdmtxt3y5bgks1c
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres-password
+      restartPolicy: Always

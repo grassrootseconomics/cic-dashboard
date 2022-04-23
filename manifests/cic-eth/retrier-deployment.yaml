@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-eth-retrier
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-eth:0.5.81
+          image: docker.grassecon.net/cic-stack/cic-eth:a32c0eaf
           imagePullPolicy: Always
           command: ["./start_retry.sh", "-v"]
           envFrom:

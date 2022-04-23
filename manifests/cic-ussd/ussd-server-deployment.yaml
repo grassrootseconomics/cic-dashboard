@@ -18,7 +18,7 @@ spec:
       containers:
         - name: cic-user-ussd-server
           image: docker.grassecon.net/cic-stack/cic-ussd:balances
-          command: ["/root/start_cic_user_ussd_server.sh", "-vv"]
+          command: ["/root/start_cic_user_ussd_server.sh", "-v"]
           envFrom:
             - configMapRef:
                 name: postgres-common

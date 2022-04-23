@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-eth-tracker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-eth:0.5.81
+          image: docker.grassecon.net/cic-stack/cic-eth:46545a6a
           imagePullPolicy: Always
           command: ["./start_tracker.sh", "-v"]
           envFrom:

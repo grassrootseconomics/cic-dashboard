@@ -47,14 +47,14 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   namespace: grassroots
-  name: stats.kitabu.grassecon.org
+  name: stats.kitabu.sarafu.network
   labels:
     "use-http01-solver": "true"
 spec:
-  commonName: stats.kitabu.grassecon.org
-  secretName: stats.kitabu.grassecon.org.cert
+  commonName: stats.kitabu.sarafu.network
+  secretName: stats.kitabu.sarafu.network.cert
   dnsNames:
-    - stats.kitabu.grassecon.org
+    - stats.kitabu.sarafu.network
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -68,10 +68,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`stats.kitabu.grassecon.org`)
+    - match: Host(`stats.kitabu.sarafu.network`)
       kind: Rule
       services:
         - name: ethstats-server-svc
           port: server
   tls:
-    secretName: stats.kitabu.grassecon.org.cert
+    secretName: stats.kitabu.sarafu.network.cert

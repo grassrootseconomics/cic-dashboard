@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+  namespace: grassroots
+  labels:
+    app: ubuntu
+spec:
+  selector:
+    matchLabels:
+      app: ubuntu
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+        group: dev
+    spec:
+      containers:
+        - name: ubuntu
+          image: ubuntu:20.04
+          command: ["/bin/sleep", "365d"]
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: pv
+              mountPath: /mnt/pvc
+      volumes:
+        - name: pv
+          persistentVolumeClaim:
+            claimName: ubuntu-dev
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ubuntu-dev
+  namespace: grassroots
+  labels:
+    app: ubuntu-dev
+spec:
+  storageClassName: do-block-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
