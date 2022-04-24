@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-cache-tasker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.81
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.88
           imagePullPolicy: Always
           command: ["/usr/local/bin/cic-cache-taskerd", "-v"]
           envFrom:

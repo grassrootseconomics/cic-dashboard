@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-cache-server
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.81
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.88
           imagePullPolicy: Always
           command:
             [
