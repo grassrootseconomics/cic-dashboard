@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cic-dw
+  labels:
+    app: cic-dw
+spec:
+  selector:
+    matchLabels:
+      app: cic-dw
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cic-dw
+        group: cic-dw
+    spec:
+      containers:
+        - name: cic-dw
+          image: docker.grassecon.net/cic-dw/cic-dw:v0.2.5
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: cic-dw
+          env:
+            - name: DB_POSTGRES
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-dw-credentials
+                  key: dsn
+          ports:
+            - containerPort: 3000
+              name: server
+      restartPolicy: Always

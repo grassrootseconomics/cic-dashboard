@@ -1,0 +1,9 @@
+namespace: grassroots
+resources:
+  - secrets.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+configMapGenerator:
+  - name: cic-dw
+    env: cic-dw.env

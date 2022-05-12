@@ -7,7 +7,23 @@ spec:
   type: NodePort
   selector:
     app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: postgres-dw
   ports:
     - port: 5432
       targetPort: 5432
       nodePort: 30008
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-dw-np
+  namespace: grassroots
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: postgres-dw
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: 30010
