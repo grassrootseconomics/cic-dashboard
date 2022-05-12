@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-cache-tracker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.88
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-cache:0.5.92
           command: ["./start_tracker.sh", "-v"]
           envFrom:
             - configMapRef:

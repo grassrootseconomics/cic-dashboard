@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-user-ussd-server
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-ussd:0.5.88
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-ussd:0.5.92
           command: ["/root/start_cic_user_ussd_server.sh", "-v"]
           envFrom:
             - configMapRef:
