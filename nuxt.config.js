@@ -23,7 +23,7 @@ export default {
   modules: ['@nuxtjs/axios'],
 
   axios: {
-    baseURL: 'https://data-warehouse.sarafu.network/dashboard/',
+    baseURL: 'https://data-warehouse.sarafu.network',
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

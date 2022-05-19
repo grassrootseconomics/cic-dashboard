@@ -52,8 +52,8 @@ export default {
     const end = dateToday.toISOString().split('T')[0]
 
     const [regCount, txCount] = await Promise.all([
-      $axios.get(`/new-registrations?from=${start}&to=${end}`),
-      $axios.get(`/transactions-count?from=${start}&to=${end}`),
+      $axios.get(`/dashboard/new-registrations?from=${start}&to=${end}`),
+      $axios.get(`/dashboard/transactions-count?from=${start}&to=${end}`),
     ])
 
     return {
