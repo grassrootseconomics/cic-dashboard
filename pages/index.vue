@@ -17,8 +17,8 @@
           v-bind="attrs"
           v-on="on"
         >
-          <template v-slot:append-outer>
-            <v-btn @click="reloadChartWithRange" small dark color="blue"
+          <template #append-outer>
+            <v-btn small dark color="blue" @click="reloadChartWithRange"
               >Filter by date range</v-btn
             >
           </template>
@@ -35,8 +35,8 @@
       <v-col cols="12" md="6" lg="6">
         <skeleton-loader v-if="$fetchState.pending" h="250px"></skeleton-loader>
         <line-chart
-          :key="reload"
           v-else
+          :key="reload"
           chart-title="New Registrations"
           :chart-data="regCount"
         />
@@ -45,8 +45,8 @@
         <skeleton-loader v-if="$fetchState.pending" h="250px"></skeleton-loader>
 
         <line-chart
-          :key="reload"
           v-else
+          :key="reload"
           chart-title="Transactions Count"
           :chart-data="txCount"
         />
@@ -65,6 +65,15 @@ export default {
     SkeletonLoader,
     LineChart,
   },
+  data() {
+    return {
+      regCount: 0,
+      txCount: 0,
+      dates: [],
+      menu: false,
+      reload: false,
+    }
+  },
   async fetch() {
     const dateToday = new Date()
     const dateStart = new Date(dateToday.getFullYear(), dateToday.getMonth(), 1)
@@ -82,15 +91,6 @@ export default {
     this.dates = [start, end]
   },
   fetchOnServer: false,
-  data() {
-    return {
-      regCount: 0,
-      txCount: 0,
-      dates: [],
-      menu: false,
-      reload: false,
-    }
-  },
   computed: {
     dateRangeText() {
       return this.dates.join(' ~ ')

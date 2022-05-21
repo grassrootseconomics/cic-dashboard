@@ -19,7 +19,7 @@ export default {
   css: [],
   plugins: [{ src: '~/plugins/apexcharts.js', ssr: false }],
   components: true,
-  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/vuetify'],
+  buildModules: [['@nuxtjs/eslint-module', {fix: true}], '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios'],
 
   axios: {
