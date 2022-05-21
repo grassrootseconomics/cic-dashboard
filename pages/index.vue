@@ -16,7 +16,13 @@
           readonly
           v-bind="attrs"
           v-on="on"
-        ></v-text-field>
+        >
+          <template v-slot:append-outer>
+            <v-btn @click="reloadChartWithRange" small dark color="blue"
+              >Filter by date range</v-btn
+            >
+          </template>
+        </v-text-field>
       </template>
       <v-date-picker
         v-model="dates"
@@ -27,24 +33,39 @@
     </v-menu>
     <v-row class="d-flex justify-space-beetween">
       <v-col cols="12" md="6" lg="6">
-        <line-chart chart-title="New Registrations" :chart-data="regCount" />
+        <skeleton-loader v-if="$fetchState.pending" h="250px"></skeleton-loader>
+        <line-chart
+          :key="reload"
+          v-else
+          chart-title="New Registrations"
+          :chart-data="regCount"
+        />
       </v-col>
       <v-col cols="12" md="6" lg="6">
-        <line-chart chart-title="Transactions Count" :chart-data="txCount" />
+        <skeleton-loader v-if="$fetchState.pending" h="250px"></skeleton-loader>
+
+        <line-chart
+          :key="reload"
+          v-else
+          chart-title="Transactions Count"
+          :chart-data="txCount"
+        />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import SkeletonLoader from '~/components/SkeletonLoader.vue'
 import LineChart from '~/components/charts/LineChart.vue'
 
 export default {
   name: 'IndexPage',
   components: {
+    SkeletonLoader,
     LineChart,
   },
-  async asyncData({ $axios }) {
+  async fetch() {
     const dateToday = new Date()
     const dateStart = new Date(dateToday.getFullYear(), dateToday.getMonth(), 1)
 
@@ -52,19 +73,22 @@ export default {
     const end = dateToday.toISOString().split('T')[0]
 
     const [regCount, txCount] = await Promise.all([
-      $axios.get(`/dashboard/new-registrations?from=${start}&to=${end}`),
-      $axios.get(`/dashboard/transactions-count?from=${start}&to=${end}`),
+      this.$axios.get(`/dashboard/new-registrations?from=${start}&to=${end}`),
+      this.$axios.get(`/dashboard/transactions-count?from=${start}&to=${end}`),
     ])
 
-    return {
-      regCount: regCount.data,
-      txCount: txCount.data,
-      dates: [start, end],
-    }
+    this.regCount = regCount.data
+    this.txCount = txCount.data
+    this.dates = [start, end]
   },
+  fetchOnServer: false,
   data() {
     return {
+      regCount: 0,
+      txCount: 0,
+      dates: [],
       menu: false,
+      reload: false,
     }
   },
   computed: {
@@ -79,6 +103,24 @@ export default {
   },
 
   methods: {
+    async reloadChartWithRange() {
+      const [start, end] = this.dates
+
+      if (end < start || !start || !end) {
+        return
+      }
+
+      const [regCount, txCount] = await Promise.all([
+        this.$axios.get(`/dashboard/new-registrations?from=${start}&to=${end}`),
+        this.$axios.get(
+          `/dashboard/transactions-count?from=${start}&to=${end}`
+        ),
+      ])
+
+      this.regCount = regCount.data
+      this.txCount = txCount.data
+      this.reload = !this.reload
+    },
     formatDate(date) {
       if (!date) return null
 
