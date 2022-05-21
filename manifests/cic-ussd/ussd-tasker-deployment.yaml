@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-user-tasker
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-ussd:0.5.92
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/cic-ussd:0.5.93
           imagePullPolicy: Always
           command: ["/root/start_cic_user_tasker.sh", "-q", "cic-ussd", "-v"]
           envFrom:

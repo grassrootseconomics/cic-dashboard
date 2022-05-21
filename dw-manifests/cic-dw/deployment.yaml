@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cic-dw
-          image: docker.grassecon.net/cic-dw/cic-dw:v0.2.5
+          image: docker.grassecon.net/cic-dw/cic-dw:v0.2.9
           imagePullPolicy: Always
           envFrom:
             - configMapRef:

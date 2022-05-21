@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: cic-signer
-          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/funga-eth:0.5.92
+          image: registry.gitlab.com/grassrootseconomics/cic-internal-integration/funga-eth:0.5.93
           imagePullPolicy: Always
           # TODO: disable verbose logging
           command: ["python", "/usr/local/bin/funga-ethd", "-v"]
