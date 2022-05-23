@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col xl="8" lg="8" cols="12">
+      <v-col cols="12">
         <v-card elevation="0">
           <v-card-title>Tokens</v-card-title>
           <v-data-table
