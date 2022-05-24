@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12">
+      <v-col cols="12" lg="7">
         <v-card elevation="0">
           <v-card-title>Tokens</v-card-title>
           <v-data-table
@@ -50,7 +50,11 @@ export default {
       tokensCount: 0,
       currentPage: 1,
       loading: false,
-      headers: [
+    }
+  },
+  computed: {
+    headers() {
+      const headers = [
         {
           text: 'Token Name',
           sortable: false,
@@ -67,8 +71,14 @@ export default {
           sortable: false,
           value: 'token_addres',
         },
-      ],
-    }
+      ]
+
+      if (this.$vuetify.breakpoint.smAndDown) {
+        headers.pop()
+      }
+
+      return headers
+    },
   },
   methods: {
     async handlePageChange($event) {

@@ -20,7 +20,9 @@
             <info-card
               icon="mdi-pickaxe"
               title="Total Supply"
-              :sub-title="tokenInfo.token_total_supply.toLocaleString()"
+              :sub-title="`${tokenInfo.token_total_supply.toLocaleString()} ${
+                tokenInfo.token_symbol
+              }`"
               color="red"
             >
             </info-card>
