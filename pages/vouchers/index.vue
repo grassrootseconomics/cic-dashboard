@@ -3,21 +3,21 @@
     <v-row justify="center">
       <v-col cols="12" lg="7">
         <v-card elevation="0">
-          <v-card-title>Tokens</v-card-title>
+          <v-card-title>Vouchers</v-card-title>
           <v-data-table
             :footer-props="{
               disableItemsPerPage: true,
             }"
             :loading="loading"
             :headers="headers"
-            :items="tokenData"
-            :server-items-length="tokensCount.count"
+            :items="voucherData"
+            :server-items-length="vouchersCount.count"
             class="elevation-0"
             @update:page="handlePageChange($event)"
           >
             <template #[`item.token_name`]="{ item }">
               <b
-                ><n-link :to="`tokens/${item.token_addres}`">
+                ><n-link :to="`vouchers/${item.token_addres}`">
                   {{ item.token_name }}
                 </n-link></b
               >
@@ -32,22 +32,22 @@
 
 <script>
 export default {
-  name: 'TokensIndexPage',
+  name: 'VouchersIndexPage',
   async asyncData({ $axios }) {
-    const [tokensReq, tokensCount] = await Promise.all([
+    const [vouchersReq, vouchersCount] = await Promise.all([
       $axios.get(`/public/tokens?per_page=10&forward=true`),
       $axios.get(`/public/tokens-count`),
     ])
 
     return {
-      tokenData: tokensReq.data,
-      tokensCount: tokensCount.data,
+      voucherData: vouchersReq.data,
+      vouchersCount: vouchersCount.data,
     }
   },
   data() {
     return {
-      tokenData: [],
-      tokensCount: 0,
+      voucherData: [],
+      vouchersCount: 0,
       currentPage: 1,
       loading: false,
     }
@@ -56,18 +56,18 @@ export default {
     headers() {
       const headers = [
         {
-          text: 'Token Name',
+          text: 'Voucher Name',
           sortable: false,
           align: 'start',
           value: 'token_name',
         },
         {
-          text: 'Token Symbol',
+          text: 'Voucher Symbol',
           sortable: false,
           value: 'token_symbol',
         },
         {
-          text: 'Token Address',
+          text: 'Voucher Address',
           sortable: false,
           value: 'token_addres',
         },
@@ -84,20 +84,20 @@ export default {
     async handlePageChange($event) {
       this.loading = true
       if ($event > this.currentPage) {
-        const offset = this.tokenData[this.tokenData.length - 1].id
+        const offset = this.voucherData[this.voucherData.length - 1].id
         const data = await this.$axios.$get(
           `/public/tokens?per_page=10&forward=true&cursor=${offset}`
         )
-        this.tokenData = data
+        this.voucherData = data
         this.currentPage = $event
       }
 
       if ($event < this.currentPage) {
-        const offset = this.tokenData[0].id
+        const offset = this.voucherData[0].id
         const data = await this.$axios.$get(
           `/public/tokens?per_page=10&forward=false&cursor=${offset}`
         )
-        this.tokenData = data
+        this.voucherData = data
         this.currentPage = $event
       }
       this.loading = false

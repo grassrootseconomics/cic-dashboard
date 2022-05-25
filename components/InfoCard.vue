@@ -1,5 +1,5 @@
 <template>
-  <v-alert prominent dark :color="color" elevation="1" :icon="icon">
+  <v-alert shaped prominent dark :color="color" elevation="1" :icon="icon">
     <div class="title">
       {{ title }}
     </div>
