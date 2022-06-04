@@ -109,7 +109,7 @@
 
       <template #append>
         <div class="pa-2 text-center">
-          <v-chip color="success" small label>
+          <v-chip to="/staff" color="success" small label>
             <b>Grassroots Economics</b>
           </v-chip>
         </div>
