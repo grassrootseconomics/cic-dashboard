@@ -19,11 +19,12 @@ export default {
   css: [],
   plugins: [{ src: '~/plugins/apexcharts.js', ssr: false }],
   components: true,
-  buildModules: [['@nuxtjs/eslint-module', {fix: true}], '@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios'],
+  buildModules: [['@nuxtjs/eslint-module', { fix: true }], '@nuxtjs/vuetify'],
+  modules: ['nuxt-client-init-module', '@nuxtjs/axios'],
 
   axios: {
     baseURL: 'https://data-warehouse.sarafu.network',
+    credentials: true,
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

@@ -73,11 +73,43 @@
             <v-list-item-title>Social Network</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item v-show="isAuthenticated" to="/users">
+          <v-list-item-icon>
+            <v-icon color="success">mdi-clipboard-account</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title class="success--text">Users</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-show="isAuthenticated" to="/locked-pins">
+          <v-list-item-icon>
+            <v-icon color="success">mdi-lock-reset</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title class="success--text"
+              >Locked Pins</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-show="isAuthenticated" @click="logout()">
+          <v-list-item-icon>
+            <v-icon color="warning">mdi-exit-to-app</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title class="warning--text">Log out</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
 
       <template #append>
         <div class="pa-2 text-center">
-          <v-chip color="success" small label>
+          <v-chip to="/staff" color="success" small label>
             <b>Grassroots Economics</b>
           </v-chip>
         </div>
@@ -87,11 +119,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
       drawer: null,
     }
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+  },
+  methods: {
+    async logout() {
+      await this.$axios.post('auth/logout')
+      await this.$store.commit('setAuth', { loggedIn: false })
+      await this.$router.push('/')
+    },
   },
 }
 </script>
