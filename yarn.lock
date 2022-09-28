@@ -7742,6 +7742,13 @@ serialize-javascript@^5.0.1:
   dependencies:
     randombytes "^2.1.0"
 
+serialize-javascript@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-6.0.0.tgz#efae5d88f45d7924141da8b5c3a7a7e663fefeb8"
+  integrity sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==
+  dependencies:
+    randombytes "^2.1.0"
+
 serve-placeholder@^1.2.3:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/serve-placeholder/-/serve-placeholder-1.2.4.tgz#513eac9c435272c7fe9a86612c852ae9b1467fd4"
@@ -8888,7 +8895,7 @@ vue-router@^3.5.1:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.3.tgz#041048053e336829d05dafacf6a8fb669a2e7999"
   integrity sha512-FUlILrW3DGitS2h+Xaw8aRNvGTwtuaxrRkNSHWTizOfLUie7wuYwezeZ50iflRn8YPV5kxmU2LQuu3nM/b3Zsg==
 
-vue-server-renderer@^2.6.12, vue-server-renderer@^2.6.14:
+vue-server-renderer@^2.6.12:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/vue-server-renderer/-/vue-server-renderer-2.6.14.tgz#c8bffff152df6b47b858818ef8d524d2fc351654"
   integrity sha512-HifYRa/LW7cKywg9gd4ZtvtRuBlstQBao5ZCWlg40fyB4OPoGfEXAzxb0emSLv4pBDOHYx0UjpqvxpiQFEuoLA==
@@ -8900,6 +8907,20 @@ vue-server-renderer@^2.6.12, vue-server-renderer@^2.6.14:
     lodash.uniq "^4.5.0"
     resolve "^1.2.0"
     serialize-javascript "^3.1.0"
+    source-map "0.5.6"
+
+vue-server-renderer@^2.7.10:
+  version "2.7.10"
+  resolved "https://registry.yarnpkg.com/vue-server-renderer/-/vue-server-renderer-2.7.10.tgz#e73241c879fcc81de91882ceff135a40f756377c"
+  integrity sha512-hvlnyTZmDmnI7IpQE5YwIwexPi6yJq8eeNTUgLycPX3uhuEobygAQklHoeVREvwNKcET/MnVOtjF4c7t7mw6CQ==
+  dependencies:
+    chalk "^4.1.2"
+    hash-sum "^2.0.0"
+    he "^1.2.0"
+    lodash.template "^4.5.0"
+    lodash.uniq "^4.5.0"
+    resolve "^1.22.0"
+    serialize-javascript "^6.0.0"
     source-map "0.5.6"
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.3:
